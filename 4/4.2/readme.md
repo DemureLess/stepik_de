@@ -25,3 +25,10 @@ select export_audit_to_csv();
 ``` docker exec -it postgres_db bash ```
 
 ![](https://github.com/DemureLess/stepik_de/blob/main/4/4.2/img/i_4_2_2.png)
+
+
+5. Проверяем состояние Cron
+
+``` select * from cron.job ```
+
+![](https://github.com/DemureLess/stepik_de/blob/main/4/4.2/img/i_4_2_3.png)
