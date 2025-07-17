@@ -11,7 +11,7 @@ docker-compose up -d
 [Выполняем из  SQL](result.sql)
 
 
-![](img/i_4_1_1.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/4/4.2/img/i_4_2_1.png)
 
 3. Принудительно вызываем функцию генерации отчета
 
@@ -24,4 +24,4 @@ select export_audit_to_csv();
 
 ``` docker exec -it postgres_db bash ```
 
-![](img/i_4_1_2.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/4/4.2/img/i_4_2_2.png)
