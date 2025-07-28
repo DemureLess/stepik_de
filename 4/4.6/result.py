@@ -36,6 +36,6 @@ report = {
     "archived_user_ids": [user["user_id"] for user in users_to_archive],
 }
 
-report_filename = f"archive_report_{today_str}.json"
+report_filename = f"{today_str}.json"
 with open(report_filename, "w", encoding="utf-8") as f:
     json.dump(report, f, indent=2, ensure_ascii=False)
