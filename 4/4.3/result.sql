@@ -91,3 +91,46 @@ WHERE ds_cohort <= ds_visit
 GROUP BY ds_cohort
 ORDER BY ds_cohort;
 
+
+
+
+-- Второй вариант расчета ретешена, которые считают только прирост пользова
+-- приводим даты к нужному виду - по дням убираем дубликаты
+WITH traffic AS (
+    SELECT DISTINCT 
+        toDate(event_time) AS ds, 
+        user_id
+    FROM user_events a
+),
+
+-- находим минимальную дату посещения для каждого пользователя
+user_first_visit AS (
+    SELECT 
+        user_id,
+        MIN(ds) AS first_visit_date
+    FROM traffic
+    GROUP BY user_id
+),
+
+-- создаем таблицу с когортами и датами посещения
+-- используем минимальную дату как когорту
+retention_prep AS (
+    SELECT 
+        t.user_id, 
+        ufv.first_visit_date AS ds_cohort, 
+        t.ds AS ds_visit,
+        t.ds - ufv.first_visit_date AS diff
+    FROM traffic t
+    LEFT JOIN user_first_visit ufv ON t.user_id = ufv.user_id
+    WHERE t.ds >= ufv.first_visit_date  -- только посещения после первой даты
+    ORDER BY t.user_id, ufv.first_visit_date
+)
+
+SELECT 
+    ds_cohort, 
+    COUNT(DISTINCT user_id) AS total_users_day_0, 
+    COUNT(DISTINCT IF(diff > 0 AND diff <= 7, user_id, NULL)) AS returned_in_7_days,
+    ROUND(COUNT(DISTINCT IF(diff > 0 AND diff <= 7, user_id, NULL)) / COUNT(DISTINCT user_id) * 100, 2) AS retention_7d_percent
+FROM retention_prep
+GROUP BY ds_cohort
+ORDER BY ds_cohort;
