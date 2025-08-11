@@ -15,27 +15,27 @@
 
 1. Создаем бакет и делаем его открытым для чтения сразу с поддеркой версионирования.
 
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_1.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_1.jpg)
 
 
 2. Обеспечиваем запись себе
 - Нужно создать сервисный аккаунт
 для записи достаточно роли uploader но далее в заданиях нам придется удалять - поэтому прав нужно больше
 и для чтения / записи / удаления нужна роль editor
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_3.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_3.jpg)
 
 - добавляем сервисный аккаунт в бакет
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_4.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_4.jpg)
 
 
 3. Демонстрация того что файлы версионируются
 
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_5.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_5.jpg)
 
 4. Обеспечиваем ротацию данных
 
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_2.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_2.jpg)
 
 
 
-![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_6.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/6/6.4.2/img/i_6_4_2_6.jpg)
