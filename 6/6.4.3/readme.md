@@ -26,7 +26,7 @@ AWS_BUCKET=your_actual_bucket_name
 ### 3. Создание необходимых папок
 
 ```bash
-mkdir -p in temp archive logs
+mkdir -p in temp archive logs in
 ```
 
 ## Запуск
