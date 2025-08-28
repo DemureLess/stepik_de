@@ -1,5 +1,6 @@
 import re
 from typing import Callable, Dict, Any, Iterable, Optional
+
 from bs4 import BeautifulSoup
 from crawler.http_client import get_html
 

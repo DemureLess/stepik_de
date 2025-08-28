@@ -1,6 +1,7 @@
 import time
 import logging
 from typing import Optional, Dict
+
 import requests
 from fake_useragent import UserAgent
 

@@ -13,6 +13,7 @@ def collect_links(
     start_url: str,
     max_pages: int = 1000,
 ) -> Set[str]:
+    logger.info(f"Начинаем сбор ссылок с {start_url}, максимум {max_pages} страниц")
     base_domain = urlsplit(start_url).netloc
     # очередь для посещения
     to_visit = deque([start_url])
@@ -26,6 +27,7 @@ def collect_links(
         if url in visited:
             continue
 
+        logger.debug(f"Обрабатываем URL: {url}")
         html = get_html(url)
         if not html:
             logger.warning(f"Skip (no html): {url}")

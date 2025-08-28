@@ -5,12 +5,7 @@ from contextlib import asynccontextmanager
 from aiobotocore.session import get_session
 from botocore.exceptions import ClientError
 
-
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
 logger = logging.getLogger(__name__)
-
 
 class AsyncObjectStorage:
     def __init__(self, *, key_id: str, secret: str, endpoint: str, bucket: str):
