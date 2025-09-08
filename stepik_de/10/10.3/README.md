@@ -55,7 +55,7 @@
 В демонстрационных целях, а также чтобы иметь возможность отслеживать/перезапускать, предложено решение выполнить все задачи на Airflow.
 Данные бакетов - генерируются из config файла.
 
-![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.2.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.2.png)
 
 ### Даги
 1. **01_start_pack_dag** - выполняет создание Kafka топиков, S3 бакетов, генерацию тестовых данных
@@ -75,9 +75,9 @@
 ### Grafana
 При развертывании данные для подключения БД, дашборда и алертинга берутся из папки grafana. Алерты настроены
 
-![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.3.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.3.png)
 
-![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.4.png)
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.4.png)
 
 
 ### Jupyter Lab
