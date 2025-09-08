@@ -28,27 +28,47 @@
 ### Подготовка
 Для решения задачи нам понадобится набор сервисов: Airflow, небольшой PySpark кластер, Jupyter Lab, ClickHouse, Grafana, Kafka, MinIO S3, MongoDB, Traefik (сделаем из него прокси чтобы обращаться к сервисам по именам).
 
-Для удобства локальной разработки и использования везде (кроме S3) отключена авторизация.
+Для удобства локальной разработки и использования везде (кроме S3) **отключена авторизация**.
 
 В Airflow необходимые коннекшены для баз данных заводим через Docker Compose.
 
 Запускать сервисы будем через Docker Compose, разработка и проверка выполнена только на M1 процессорах.
 
-### Инструкция по запуску
-1. Запускаем Docker на локальном ПК
-2. Клонируем репозиторий `git clone`
-3. В директории 10.3 запускаем `docker compose up -d`
-4.
+### Требования
+- Установлен Docker (Docker Desktop).
+
+
+### Запуск
+1) Клонируем
+```bash
+git clone git@github.com:DemureLess/stepik_de.git
+cd stepik_de/10/10.3
+```
+
+2) (Только один раз) Сборка образа Airflow:
+```bash
+docker build -t airflow-with-java -f infra/airflow/Dockerfile .
+```
+
+3) Сборка локальных сервисов из Dockerfile-ов (`jupyter`, `dashboard`) и подтягивание остальных образов:
+
+Можно одной командой в фоне:
+```bash
+docker compose up -d --build
+```
+
+
+### Доступы (Traefik роутит по host-именам)
 ![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.1.png)
 
- Стартовая страница (http://localhost/)
-- [airflow.localhost](http://airflow.localhost/)
-- [kafka.localhost](http://kafka.localhost/)
-- [clickhouse.localhost](http://clickhouse.localhost/)
-- [minio-console.localhost](http://minio-console.localhost)
-- [spark.localhost](http://spark.localhost/)
-- [jupyter.localhost](http://jupyter.localhost/)
-- [grafana.localhost](http://grafana.localhost/)
+- Главная: http://localhost/
+- Airflow: http://airflow.localhost/
+- Kafka UI: http://kafka.localhost/
+- ClickHouse (HTTP): http://clickhouse.localhost/
+- MinIO: http://minio.localhost/ (консоль http://minio-console.localhost/)
+- Spark UI: http://spark.localhost/
+- Jupyter Lab: http://jupyter.localhost/
+- Grafana: http://grafana.localhost/
 
 
 
@@ -97,7 +117,8 @@
 │  ├─ 02_s3_to_mongo_transport/
 │  ├─ 03_prepare_clickhouse_for_kafka_migration/
 │  ├─ 04_prepare_dwh_mart_clickhouse/
-│  ├─ 05_mongo_to_kafka_start_migration/
+│  │  └─sql/                           # sql/ddl для вью и таблиц
+│  ├─ 05_mongo_to_kafka_start_migration/        
 │  ├─ 06_dws_customer_features_di/
 │  │  ├─ 06_dws_customer_features_di_dag.py
 │  │  └─ 06_dws_customer_features_di_app.py
