@@ -1,0 +1,189 @@
+apiVersion: 1
+groups:
+    - orgId: 1
+      name: "911"
+      folder: "911"
+      interval: 1m
+      rules:
+        - uid: bexdau064g000b
+          title: purchases_monitoring
+          condition: C
+          data:
+            - refId: A
+              queryType: table
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: click-1
+              model:
+                editorType: sql
+                format: 1
+                intervalMs: 1000
+                maxDataPoints: 43200
+                meta:
+                    builderOptions:
+                        columns: []
+                        database: ""
+                        limit: 1000
+                        mode: list
+                        queryType: table
+                        table: ""
+                pluginVersion: 4.10.2
+                queryType: table
+                rawSql: SELECT count(id) as cnt FROM "default"."purchases_data" LIMIT 1000
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 200
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: alerts_monitoring
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: alerts_monitoring
+            __panelId__: "1"
+            summary: |-
+                Количество заказов >200
+                Проверь данные
+          isPaused: false
+          notification_settings:
+            receiver: "911"
+        - uid: aexdaz6iv8kcgd
+          title: stores_data_monitoring
+          condition: C
+          data:
+            - refId: A
+              queryType: table
+              relativeTimeRange:
+                from: 600
+                to: 0
+              datasourceUid: click-1
+              model:
+                editorType: sql
+                format: 1
+                intervalMs: 1000
+                maxDataPoints: 43200
+                meta:
+                    builderOptions:
+                        columns: []
+                        database: ""
+                        limit: 1000
+                        mode: list
+                        queryType: table
+                        table: ""
+                pluginVersion: 4.10.2
+                queryType: table
+                rawSql: SELECT COUNT(id) FROM "default"."stores_data"
+                refId: A
+            - refId: B
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params: []
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - B
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: A
+                intervalMs: 1000
+                maxDataPoints: 43200
+                reducer: last
+                refId: B
+                type: reduce
+            - refId: C
+              datasourceUid: __expr__
+              model:
+                conditions:
+                    - evaluator:
+                        params:
+                            - 45
+                        type: gt
+                      operator:
+                        type: and
+                      query:
+                        params:
+                            - C
+                      reducer:
+                        params: []
+                        type: last
+                      type: query
+                datasource:
+                    type: __expr__
+                    uid: __expr__
+                expression: B
+                intervalMs: 1000
+                maxDataPoints: 43200
+                refId: C
+                type: threshold
+          dashboardUid: alerts_monitoring
+          panelId: 1
+          noDataState: NoData
+          execErrState: Error
+          for: 1m
+          annotations:
+            __dashboardUid__: alerts_monitoring
+            __panelId__: "1"
+            summary: stores - не в порядке. проверь данные
+          isPaused: false
+          notification_settings:
+            receiver: "911"
+
+
