@@ -28,7 +28,7 @@
 ### Подготовка
 Для решения задачи нам понадобится набор сервисов: Airflow, небольшой PySpark кластер, Jupyter Lab, ClickHouse, Grafana, Kafka, MinIO S3, MongoDB, Traefik (сделаем из него прокси чтобы обращаться к сервисам по именам).
 
-Для удобства локальной разработки и использования везде (кроме S3) отключена авторизация.
+Для удобства локальной разработки и использования везде (кроме S3) **отключена авторизация**.
 
 В Airflow необходимые коннекшены для баз данных заводим через Docker Compose.
 
@@ -60,6 +60,8 @@ docker compose up -d --build
 
 
 ### Доступы (Traefik роутит по host-именам)
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.1.png)
+
 - Главная: http://localhost/
 - Airflow: http://airflow.localhost/
 - Kafka UI: http://kafka.localhost/
