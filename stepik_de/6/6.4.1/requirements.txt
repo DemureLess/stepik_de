@@ -1,6 +1,0 @@
-aiobotocore==2.22.0
-boto3==1.37.0
-botocore==1.37.2
-python-dotenv==1.0.1
-pathlib==1.0.1
-asyncio==3.4.3
