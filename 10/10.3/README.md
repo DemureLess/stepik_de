@@ -38,7 +38,10 @@
 1. Запускаем Docker на локальном ПК
 2. Клонируем репозиторий `git clone`
 3. В директории 10.3 запускаем `docker compose up -d`
-4. Стартовая страница (http://localhost/)
+4.
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.1.jpg)
+
+ Стартовая страница (http://localhost/)
 - [airflow.localhost](http://airflow.localhost/)
 - [kafka.localhost](http://kafka.localhost/)
 - [clickhouse.localhost](http://clickhouse.localhost/)
@@ -51,6 +54,8 @@
 
 В демонстрационных целях, а также чтобы иметь возможность отслеживать/перезапускать, предложено решение выполнить все задачи на Airflow.
 Данные бакетов - генерируются из config файла.
+
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.2.jpg)
 
 ### Даги
 1. **01_start_pack_dag** - выполняет создание Kafka топиков, S3 бакетов, генерацию тестовых данных
@@ -69,6 +74,11 @@
 
 ### Grafana
 При развертывании данные для подключения БД, дашборда и алертинга берутся из папки grafana. Алерты настроены
+
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.3.jpg)
+
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/img_10.3.4.jpg)
+
 
 ### Jupyter Lab
 Предоставлены стартовые ноутбуки с вариантами подключения к бд, pyspark, s3.
