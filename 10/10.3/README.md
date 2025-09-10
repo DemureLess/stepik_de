@@ -102,7 +102,23 @@ docker compose up -d --build
 
 
 ### Jupyter Lab
-Предоставлены стартовые ноутбуки с вариантами подключения к бд, pyspark, s3.
+Предоставлены стартовые ноутбуки с вариантами подключения к clickhouse, pyspark, s3.
+
+### Работающий  pyspark
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.5.png)
+
+### Файлы S3
+сырые данные
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.6.png)
+
+Хранение партиционированной таблицы
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.7.png)
+
+Хранение партиционированной таблицы
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.8.png)
+
+Результирующий csv
+![](https://github.com/DemureLess/stepik_de/blob/main/10/10.3/images/img_10.3.9.png)
 
 
 ### Структура проекта
