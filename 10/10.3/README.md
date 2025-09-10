@@ -49,10 +49,10 @@ cd stepik_de/10/10.3
 ```bash
 docker build -t airflow-with-java -f infra/airflow/Dockerfile .
 ```
-3) продюссер 
+3) Варим продюссер 
  ```docker build -t simple-migrator -f infra/produccer/Dockerfile .```
 
-3) Сборка локальных сервисов из Dockerfile-ов (`jupyter`, `dashboard`) и подтягивание остальных образов:
+4) Сборка локальных сервисов из Dockerfile-ов (`jupyter`, `dashboard`) и подтягивание остальных образов:
 
 ```bash
 docker compose up -d --build
