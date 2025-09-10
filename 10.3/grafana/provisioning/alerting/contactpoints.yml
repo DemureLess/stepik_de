@@ -1,0 +1,15 @@
+apiVersion: 1
+contactPoints:
+  - orgId: 1
+    name: "911"
+    receivers:
+      - uid: "telegram-911"
+        type: telegram
+        settings:
+          bottoken: 7074207265:AAFN0wNX8dYPtAmO_Vmq6Ko1EAVWJqTtV1E
+          chatid: "-4199879322"
+          disable_notification: false
+          disable_web_page_preview: false
+          parse_mode: HTML
+          protect_content: false
+        disableResolveMessage: false

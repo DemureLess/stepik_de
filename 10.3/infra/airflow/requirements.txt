@@ -1,0 +1,35 @@
+
+
+# Kafka
+kafka-python==2.0.2
+
+# AWS/S3
+boto3
+
+
+# Data generation
+faker==20.1.0
+
+# Spark
+pyspark
+py4j
+apache-airflow-providers-apache-spark
+
+# ClickHouse
+clickhouse-connect
+airflow-providers-clickhouse
+clickhouse-driver
+airflow-clickhouse-plugin
+
+# HTTP requests
+requests
+
+# Environment variables
+python-dotenv
+
+# PostgreSQL
+psycopg2-binary
+
+apache-airflow-providers-mongo
+
+# docker build -f Dockerfile.airflow -t airflow-with-java .
