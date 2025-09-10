@@ -54,9 +54,7 @@ def spark_app(input_table, output_bucket, output_path, file_name):
         if csv_file is None:
             raise RuntimeError("Temporary CSV part file was not produced")
 
-        final_name = (
-            file_name if str(file_name).endswith(".csv") else f"{file_name}.csv"
-        )
+        final_name = f"{file_name}_{max_ds}.csv"
         target_path = spark.sparkContext._jvm.org.apache.hadoop.fs.Path(
             f"{output_dir}{final_name}"
         )

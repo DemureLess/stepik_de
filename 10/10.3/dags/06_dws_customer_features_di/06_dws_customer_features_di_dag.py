@@ -67,7 +67,7 @@ spark_config = {
 default_args = {
     "owner": "pavel.romanovskiy",
     "depends_on_past": False,
-    "start_date": datetime(2025, 8, 29),
+    "start_date": datetime(2025, 9, 10),
     "email_on_failure": False,
     "email_on_retry": False,
     "retries": 1,

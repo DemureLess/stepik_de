@@ -6,7 +6,6 @@ from airflow import DAG
 from utils.utils import load_config
 from airflow.models import Variable
 from airflow.providers.docker.operators.docker import DockerOperator
-from airflow.operators.python import PythonOperator
 from airflow.hooks.base import BaseHook
 from airflow.operators.empty import EmptyOperator
 
@@ -53,27 +52,6 @@ def build_env_for_pair(collection: str, topic: str) -> dict:
     return env
 
 
-def create_docker_task(collection: str, topic: str, **context):
-    """Создает и выполняет Docker задачу с правильными переменными окружения"""
-    env = build_env_for_pair(collection, topic)
-
-    # Создаем DockerOperator динамически
-    docker_task = DockerOperator(
-        task_id=f"migrate__{collection}_to_{topic}",
-        image="simple-migrator:latest",
-        api_version="auto",
-        auto_remove=True,
-        command=None,
-        environment=env,
-        docker_url="unix://var/run/docker.sock",
-        network_mode="airflow_network",
-        mount_tmp_dir=False,
-    )
-
-    # Выполняем задачу
-    return docker_task.execute(context)
-
-
 default_args = {
     "owner": "pavel.romanovskiy",
     "depends_on_past": False,
@@ -96,14 +74,19 @@ with DAG(
 ) as dag:
     start = EmptyOperator(task_id="start")
     end = EmptyOperator(task_id="end")
-    mapping = load_mapping()  # {collection: topic}
+    mapping = load_mapping()
 
     for collection, topic in mapping.items():
-        # Используем PythonOperator вместо прямого вызова DockerOperator
-        migrate_task = PythonOperator(
+        env = build_env_for_pair(collection, topic)
+        migrate_task = DockerOperator(
             task_id=f"migrate__{collection}_to_{topic}",
-            python_callable=create_docker_task,
-            op_kwargs={"collection": collection, "topic": topic},
+            image="simple-migrator:latest",
+            auto_remove=True,
+            command=None,
+            environment=env,
+            docker_url="unix://var/run/docker.sock",
+            network_mode="airflow_network",
+            mount_tmp_dir=False,
         )
 
         start >> migrate_task >> end
