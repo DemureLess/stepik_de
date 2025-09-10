@@ -87,7 +87,21 @@ docker compose up -d --build
 
 4. **04_prepare_dwh_mart_clickhouse_dag** - готовим нашу целевую базу данных, настраиваем view и таблицы (отсутствие дубликатов)
 
-5. **05_mongo_to_kafka_start_migration_dag** - сама миграция. В продюсере происходит обработка полей телефоны/электронная почта и шифрование. Чтобы не изобретать сервис миграции принято решение продюсер упаковать в контейнер и запускать его через Airflow
+5. **05_mongo_to_kafka_start_migration_dag** — миграция MongoDB → Kafka.
+   - Использует DockerOperator, который запускает локальный образ `simple-migrator:latest` в сети `airflow_network`.
+   - Маппинг коллекций на Kafka-топики берётся из конфигурации `mongodb_kafka_migration` (см. `dags/utils/config/*.json`),
+   (ключи - коллекции монго, значения - топики кафка)
+     ```json
+     {
+       "mongodb_kafka_migration": {
+         "customers": "customers",
+         "products": "products",
+         "purchases": "purchases",
+         "stores": "stores"
+       }
+     }
+     ```
+В продюссере происходит шифрование телефонов и электропочты
 
 6. **06_dws_customer_features_di_dag** - ETL на PySpark. Выполняется каждый день в 10:00 по UTC и данные пишет в партиционированную таблицу с хранением в S3
 
