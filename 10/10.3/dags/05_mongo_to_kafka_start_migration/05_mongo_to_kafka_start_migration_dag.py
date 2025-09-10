@@ -3,11 +3,11 @@ import os
 from datetime import datetime, timedelta
 
 from airflow import DAG
-from utils.utils import load_config
-from airflow.models import Variable
 from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.hooks.base import BaseHook
 from airflow.operators.empty import EmptyOperator
+
+from utils.utils import load_config
 
 DAG_ID = os.path.basename(__file__).replace(".pyc", "").replace(".py", "")
 INTERVAL = None
@@ -41,13 +41,7 @@ def build_env_for_pair(collection: str, topic: str) -> dict:
         + (f":{kafka_conn.port}" if kafka_conn.port else ""),
         "COLLECTION": collection,
         "TOPIC": topic,
-        "BATCH_SIZE": str(Variable.get("MIGRATION_BATCH_SIZE", default_var="1000")),
     }
-
-    # QUERY_FILTER как JSON-строка (опционально из Variable)
-    query_filter = Variable.get("MIGRATION_QUERY_FILTER", default_var=None)
-    if query_filter:
-        env["QUERY_FILTER"] = query_filter
 
     return env
 

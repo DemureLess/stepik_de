@@ -2,12 +2,14 @@ import os
 from datetime import datetime, timedelta
 
 from airflow import DAG
-from utils.utils import load_config
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from airflow.hooks.base import BaseHook
 from airflow.utils.task_group import TaskGroup
 from airflow.operators.empty import EmptyOperator
 from airflow.operators.python import PythonOperator
+
+from utils.utils import load_config
+
 
 DAG_ID = os.path.basename(__file__).replace(".pyc", "").replace(".py", "")
 INTERVAL = None
@@ -120,6 +122,7 @@ with DAG(
     start = EmptyOperator(task_id="start")
     end = EmptyOperator(task_id="end")
     mapping = load_mapping()  # {collection: topic}
+
     for collection, topic in mapping.items():
         with TaskGroup(group_id=f"kafka_to_clickhouse_{topic}") as topic_group:
             # Удаление материализованного представления

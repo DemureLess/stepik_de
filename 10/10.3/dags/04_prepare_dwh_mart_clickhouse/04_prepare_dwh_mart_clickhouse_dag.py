@@ -1,9 +1,12 @@
-from airflow import DAG
-from airflow.utils.task_group import TaskGroup
-from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 from datetime import datetime, timedelta
 import os
+
+from airflow import DAG
+
 from airflow.operators.empty import EmptyOperator
+from airflow.utils.task_group import TaskGroup
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+
 
 from utils.utils import load_config
 

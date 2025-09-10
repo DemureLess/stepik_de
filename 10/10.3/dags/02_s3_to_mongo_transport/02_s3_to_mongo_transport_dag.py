@@ -10,9 +10,6 @@ from utils.s3_to_mongo_operator import S3ToMongoOperator
 from utils.utils import load_config
 
 
-# оставляем существующую функцию load_config из utils
-
-
 DAG_ID = os.path.basename(__file__).replace(".pyc", "").replace(".py", "")
 INTERVAL = None
 

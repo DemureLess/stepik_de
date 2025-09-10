@@ -63,8 +63,6 @@ def create_minio_buckets(bucket_name: str):
 
 def create_kafka_topics(topic_name: str):
     """Создать топик Kafka"""
-    import time
-
     from airflow.hooks.base import BaseHook
     from kafka.admin import KafkaAdminClient, NewTopic
     from kafka.errors import TopicAlreadyExistsError
@@ -72,109 +70,30 @@ def create_kafka_topics(topic_name: str):
     # Получаем connection из Airflow
     kafka_conn = BaseHook.get_connection("kafka_default")
 
-    # Добавляем логирование
-    logging.info(f"Подключение к Kafka: {kafka_conn.host}:{kafka_conn.port}")
+    try:
+        admin_client = KafkaAdminClient(
+            bootstrap_servers=f"{kafka_conn.host}:29092",
+            client_id="airflow_admin",
+        )
 
-    # Попытки подключения с задержкой
-    max_retries = 10
-    retry_delay = 15
+        # Создаем топик
+        topic = NewTopic(
+            name=topic_name,
+            num_partitions=3,
+            replication_factor=1,
+        )
 
-    for attempt in range(max_retries):
-        admin_client = None
-        try:
-            # Пробуем разные варианты подключения
-            # Строим список адресов на основе настроек Connection.
-            # В приоритете — явный порт из коннекта, затем дефолтный внутренний 29092.
-            bootstrap_servers_options = []
-            if kafka_conn.host and kafka_conn.port:
-                bootstrap_servers_options.append(f"{kafka_conn.host}:{kafka_conn.port}")
-            # Добавим стандартный внутренний адрес как запасной вариант
-            if f"{kafka_conn.host}:{kafka_conn.port}" != "kafka:29092":
-                bootstrap_servers_options.append("kafka:29092")
+        admin_client.create_topics([topic], validate_only=False)
+        logging.info(f"Топик {topic_name} создан успешно")
 
-            for bootstrap_servers in bootstrap_servers_options:
-                try:
-                    logging.info(f"Попытка подключения к: {bootstrap_servers}")
-
-                    admin_client = KafkaAdminClient(
-                        bootstrap_servers=bootstrap_servers,
-                        client_id="airflow_admin",
-                        request_timeout_ms=60000,
-                        connections_max_idle_ms=60000,
-                        api_version_auto_timeout_ms=60000,
-                        security_protocol="PLAINTEXT",
-                    )
-
-                    # Проверяем подключение
-                    metadata = admin_client.describe_cluster()
-                    logging.info(f"Успешное подключение к Kafka: {bootstrap_servers}")
-
-                    # Создаем топик с параметрами по умолчанию
-                    topic = NewTopic(
-                        name=topic_name,
-                        num_partitions=3,
-                        replication_factor=1,
-                        topic_configs={
-                            "cleanup.policy": "delete",
-                            "retention.ms": "604800000",
-                        },
-                    )
-
-                    try:
-                        admin_client.create_topics([topic], validate_only=False)
-                        logging.info(
-                            f"Топик {topic_name} создан успешно через {bootstrap_servers}"
-                        )
-                    except TopicAlreadyExistsError:
-                        logging.info(
-                            f"Топик {topic_name} уже существует (через {bootstrap_servers})"
-                        )
-
-                    # Проверяем что топик действительно создался
-                    topics = admin_client.list_topics()
-                    if topic_name in topics:
-                        logging.info(
-                            f"Подтверждено: топик {topic_name} существует в списке топиков"
-                        )
-                    else:
-                        logging.warning(
-                            f"Топик {topic_name} не найден в списке после создания"
-                        )
-
-                    admin_client.close()
-                    return
-
-                except Exception as conn_error:
-                    logging.warning(
-                        f"Не удалось подключиться к {bootstrap_servers}: {conn_error}"
-                    )
-                    if admin_client:
-                        admin_client.close()
-                        admin_client = None
-                    continue
-
-            # Если все варианты подключения не сработали
-            raise Exception("Не удалось подключиться ни к одному из bootstrap серверов")
-
-        except TopicAlreadyExistsError:
-            logging.info(f"Топик {topic_name} уже существует")
-            if admin_client:
-                admin_client.close()
-            return
-        except Exception as e:
-            logging.warning(
-                f"Попытка {attempt + 1}/{max_retries}: Ошибка при создании топика {topic_name}: {e}"
-            )
-            if admin_client:
-                admin_client.close()
-            if attempt < max_retries - 1:
-                time.sleep(retry_delay)
-                continue
-            else:
-                logging.error(
-                    f"Не удалось создать топик {topic_name} после {max_retries} попыток"
-                )
-                raise
+    except TopicAlreadyExistsError:
+        logging.info(f"Топик {topic_name} уже существует")
+    except Exception as e:
+        logging.error(f"Ошибка при создании топика {topic_name}: {e}")
+        raise
+    finally:
+        if "admin_client" in locals():
+            admin_client.close()
 
 
 def generate_data():
