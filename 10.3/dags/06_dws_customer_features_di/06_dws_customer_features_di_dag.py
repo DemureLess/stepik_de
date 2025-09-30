@@ -28,10 +28,10 @@ s3_conn = BaseHook.get_connection("s3_default")
 
 spark_config = {
     "spark.master": "spark://spark:7077",
-    "spark.executor.memory": "2g",
-    "spark.driver.memory": "2g",
-    "spark.executor.cores": "2",
-    "spark.executor.instances": "2",
+    "spark.executor.memory": "1g",
+    "spark.driver.memory": "1g",
+    "spark.executor.cores": "1",
+    "spark.executor.instances": "1",
     # JAR для подключения к s3/clickhouse
     "spark.jars": (
         "/opt/spark-3.4.2-bin-hadoop3/jars/clickhouse-spark-runtime-3.4_2.12-0.8.0.jar,"

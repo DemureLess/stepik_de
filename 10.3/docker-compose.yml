@@ -13,11 +13,6 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
     AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: 'true'
-    # AIRFLOW__WEBSERVER__SESSION_BACKEND: securecookie
-    # AIRFLOW__WEBSERVER__ENABLE_PROXY_FIX: 'true'
-    # AIRFLOW__WEBSERVER__BASE_URL: 'http://airflow.localhost'
-    # AIRFLOW__CORE__TEST_CONNECTION: 'Disabled' #
-    # PYTHONPATH: /opt/airflow/dags:/opt/airflow/dags/utils #
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
   volumes:
     - ${AIRFLOW_PROJ_DIR:-.}/dags:/opt/airflow/dags
@@ -367,7 +362,7 @@ services:
       start_period: 30s
 
   spark:
-    image: bitnami/spark:3.4.2
+    image: bitnamilegacy/spark:3.4.2
     environment:
       - SPARK_MODE=master
       - SPARK_RPC_AUTHENTICATION_ENABLED=no
@@ -384,13 +379,13 @@ services:
     restart: unless-stopped
 
   spark-worker-1:
-    image: bitnami/spark:3.4.2
+    image: bitnamilegacy/spark:3.4.2
     command: ["/opt/bitnami/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark:7077"]
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
-      - SPARK_WORKER_CORES=2
-      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
       - SPARK_CONF_DIR=/opt/bitnami/spark/conf
     depends_on:
       - spark
@@ -399,13 +394,13 @@ services:
     restart: unless-stopped
 
   spark-worker-2:
-    image: bitnami/spark:3.4.2
+    image: bitnamilegacy/spark:3.4.2
     command: ["/opt/bitnami/spark/bin/spark-class", "org.apache.spark.deploy.worker.Worker", "spark://spark:7077"]
     environment:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
-      - SPARK_WORKER_CORES=2
-      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
     depends_on:
       - spark
     volumes:
