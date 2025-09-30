@@ -385,7 +385,7 @@ services:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
       - SPARK_WORKER_CORES=1
-      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_MEMORY=2G
       - SPARK_CONF_DIR=/opt/bitnami/spark/conf
     depends_on:
       - spark
@@ -400,7 +400,7 @@ services:
       - SPARK_MODE=worker
       - SPARK_MASTER_URL=spark://spark:7077
       - SPARK_WORKER_CORES=1
-      - SPARK_WORKER_MEMORY=1G
+      - SPARK_WORKER_MEMORY=2G
     depends_on:
       - spark
     volumes:

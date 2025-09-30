@@ -29,9 +29,9 @@ s3_conn = BaseHook.get_connection("s3_default")
 # Spark конфигурация
 spark_config = {
     "spark.master": "spark://spark:7077",
-    "spark.executor.memory": "2g",
-    "spark.driver.memory": "2g",
-    "spark.executor.cores": "2",
+    "spark.executor.memory": "1g",
+    "spark.driver.memory": "1g",
+    "spark.executor.cores": "1",
     "spark.executor.instances": "2",
     # JAR файлы
     "spark.jars": (
